@@ -10,6 +10,9 @@ public class Login extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
+    // VAR TEM QUE SER EM ESCOBO GLOBAL PQ PEGA NO VERIFICAR LOGIN
+    private JFormattedTextField emailField;  
+    private JFormattedTextField passwordField;
 
     /**
      * Launch the application.
@@ -57,15 +60,11 @@ public class Login extends JFrame {
 
         RoundedButton button = new RoundedButton("Login", 10);
         button.setBounds(59, 175, 68, 27);
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Ação do botão de login
-            }
-        });
+        button.addActionListener(e -> verificarLogin());
         contentPane.add(button);
 
         // Campo de e-mail arredondado
-        JFormattedTextField emailField = new RoundedFormattedTextField(10);
+        emailField = new RoundedFormattedTextField(10);
         emailField.setToolTipText("Digite seu e-mail");
         emailField.setText("E-mail");
         emailField.setBounds(59, 77, 324, 27);
@@ -74,7 +73,7 @@ public class Login extends JFrame {
         contentPane.add(emailField);
 
         // Campo de senha arredondado
-        JFormattedTextField passwordField = new RoundedFormattedTextField(10);
+        passwordField = new RoundedFormattedTextField(10);
         passwordField.setToolTipText("Digite sua senha");
         passwordField.setText("Senha");
         passwordField.setBounds(59, 124, 324, 27);
@@ -85,6 +84,50 @@ public class Login extends JFrame {
 
         // Centralizar a janela
         setLocationRelativeTo(null);
+    }
+    
+    //VERIFICAR LOGIN
+    private void verificarLogin() {
+        String usuario = emailField.getText();
+        String senha = passwordField.getText();
+
+        if (usuario.equals("eovine") && senha.equals("1234")) {
+            abrirHomeUsuario();
+        } else if (usuario.equals("admin") && senha.equals("admin123")) {
+            abrirHomeAdmin();
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+  //TELA DE HOME
+    private void abrirHomeUsuario() {
+        JFrame homeUser = new JFrame("Home Usuário");
+        homeUser.setSize(400, 300);
+        homeUser.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        homeUser.setLocationRelativeTo(null);
+
+        JLabel mensagem = new JLabel("Bem-vindo, Usuário!", SwingConstants.CENTER);
+        mensagem.setFont(new Font("Arial", Font.BOLD, 20));
+        homeUser.add(mensagem);
+
+        homeUser.setVisible(true);
+        this.dispose();
+    }
+
+    //TELA DE USUARIO
+    private void abrirHomeAdmin() {
+        JFrame homeAdmin = new JFrame("Home Admin");
+        homeAdmin.setSize(400, 300);
+        homeAdmin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        homeAdmin.setLocationRelativeTo(null);
+
+        JLabel mensagem = new JLabel("Bem-vindo, Admin!", SwingConstants.CENTER);
+        mensagem.setFont(new Font("Arial", Font.BOLD, 20));
+        homeAdmin.add(mensagem);
+
+        homeAdmin.setVisible(true);
+        this.dispose();
     }
 
     // Classe personalizada para criar campos arredondados
